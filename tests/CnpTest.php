@@ -17,6 +17,7 @@ class CnpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('2011-01-02', $cnp->getBirthDateFromCNP('Y-m-d'));
         $this->assertEquals('male', $cnp->getGenderFromCNP('male', 'female'));
         $this->assertEquals('M', $cnp->getGenderFromCNP('M', 'F'));
+        $this->assertEquals('M', $cnp->getGenderFromCNP());
         $this->assertNotEquals('M', $cnp->getGenderFromCNP('male', 'female'));
     }
 
