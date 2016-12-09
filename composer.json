@@ -1,5 +1,5 @@
 {
-    "name": "Alcea",
+    "name": "alcea/cnp",
     "description": "PHP - Validation for Romanian Social Security Number (Validare CNP)",
     "license": "MIT",
     "authors": [
