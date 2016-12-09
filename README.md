@@ -3,6 +3,8 @@
 # CNP
 PHP - Validation for Romanian Social Security Number (Validare CNP)
 
+#How to use?
+
 ```php
 <?php
 
@@ -16,4 +18,5 @@ if ($cnp->isValid()) {
 } else {
     echo "CNP {$cnpToValidate} is invalid" . PHP_EOL;
 }
+?>
 ```
