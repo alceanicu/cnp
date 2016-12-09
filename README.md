@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alceanicu/cnp-1.svg?branch=master)](https://travis-ci.org/alceanicu/cnp-1)
+[![Build Status](https://travis-ci.org/alceanicu/Cnp.svg?branch=master)](https://travis-ci.org/alceanicu/Cnp)
 
 # CNP
 PHP - Validation for Romanian Social Security Number (Validare CNP)
