@@ -1,6 +1,6 @@
 <?php
 
-use \Cnp\Cnp;
+use Alcea\Cnp\Cnp;
 
 class CnpTest extends PHPUnit_Framework_TestCase
 {
