@@ -3,7 +3,7 @@
 namespace Cnp;
 
 /**
- * Class Cnp - Validation for Romanian Social Security Number (CNP)
+ * Class Cnp - Validation for Romanian Social Security Number (CNP )
  *
  * Valid format:
  * |S|YY|MM|DD|CC|XXX|C|
@@ -101,7 +101,7 @@ class Cnp
         '35' => 'Timis',
         '36' => 'Tulcea',
         '37' => 'Vaslui',
-        '38' => 'Vâlcea',
+        '38' => 'VÃ¢lcea',
         '39' => 'Vrancea',
         '40' => 'Bucuresti',
         '41' => 'Bucuresti S.1',
