@@ -1,7 +1,11 @@
+[![Build Status](https://travis-ci.org/alceanicu/cnp-1.svg?branch=master)](https://travis-ci.org/alceanicu/cnp-1)
+
 # CNP
 PHP - Validation for Romanian Social Security Number (Validare CNP)
 
 ```php
+<?php
+
 $cnpToValidate = 'xxx';
 $cnp = new \Cnp\Cnp($cnpToValidate);
 if ($cnp->isValid()) {
