@@ -10,14 +10,14 @@ PHP validation for Romanian Social Security Number (Validare CNP)
 composer require  alcea/cnp "~1"
 ```
 
-### 2. edit require section from composer.json
+### 2. or, edit require section from composer.json
 ```
 "alcea/cnp": "*"
 ```
 
-### 3. clone from GitHub
+### 3. or, clone from GitHub
 ```
-git clone https://github.com/alceanicu/Cnp.git
+git clone https://github.com/alceanicu/cnp.git
 ```
 
 #How to use?
