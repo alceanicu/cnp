@@ -26,8 +26,8 @@ git clone https://github.com/alceanicu/cnp.git
 <?php
 use Alcea\Cnp\Cnp;
 
-$cnpToValidate = '5110102441483';
-$cnp = new Cnp($cnpToValidate);
+$cnpToBeValidated = '5110102441483';
+$cnp = new Cnp($cnpToBeValidated);
 if ($cnp->isValid()) {
     // get info from CNP
     echo "CNP {$cnpToValidate} - is valid" . PHP_EOL;
