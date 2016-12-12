@@ -30,12 +30,12 @@ $cnpToBeValidated = '5110102441483';
 $cnp = new Cnp($cnpToBeValidated);
 if ($cnp->isValid()) {
     // get info from CNP
-    echo "CNP {$cnpToValidate} - is valid" . PHP_EOL;
+    echo "CNP {$cnpToBeValidated} - is valid" . PHP_EOL;
     echo "Birth Date: {$cnp->getBirthDateFromCNP('Y/m/d')}" . PHP_EOL;
     echo "Birth Place: {$cnp->getBirthCountyFromCNP()}" . PHP_EOL;
     echo "Gender: {$cnp->getGenderFromCNP('male', 'female')}" . PHP_EOL;
 } else {
-    echo "CNP {$cnpToValidate} is invalid" . PHP_EOL;
+    echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
 ?>
 ```
