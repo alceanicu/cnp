@@ -12,7 +12,7 @@ composer require  alcea/cnp "~1"
 
 ### 2. or, edit require section from composer.json
 ```
-"alcea/cnp": "*"
+"alcea/cnp": "~1"
 ```
 
 ### 3. or, clone from GitHub
