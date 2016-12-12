@@ -7,12 +7,12 @@ PHP validation for Romanian Social Security Number (Validare CNP)
 
 ### 1. Use composer
 ```php
-composer require  alcea/cnp "*"
+composer require  alcea/cnp "~1"
 ```
 
 ### 2. edit require section from composer.json
 ```
-    "alcea/cnp": "*"
+"alcea/cnp": "*"
 ```
 
 ### 3. clone from GitHub
