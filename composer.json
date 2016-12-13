@@ -2,12 +2,15 @@
     "name": "alcea/cnp",
     "description": "PHP Validation for Romanian Social Security Number (Validare PHP pentru CNP)",
     "license": "MIT",
+    "keywords":["CNP"],
+    "type":"library",
     "authors": [
         {
             "name": "Alcea Nicolae",
             "email": "nicu.alcea@gmail.com"
         }
     ],
+    "homepage": "https://github.com/alceanicu/cnp",
     "require": {
         "php": ">=5.3.0"
     },
