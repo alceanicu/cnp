@@ -1,6 +1,6 @@
 <?php
 
-namespace Alcea\Cnp;
+namespace alcea\cnp;
 
 /**
  * Class Cnp - Validation for Romanian Social Security Number (CNP)
@@ -23,7 +23,7 @@ namespace Alcea\Cnp;
  * |C|  - check Digit
  *
  * ```php
- * use Alcea\Cnp\Cnp;
+ * use alcea\cnp\Cnp;
  *
  * $cnpToValidate = '5110102441483';
  * $cnp = new Cnp($cnpToValidate);
@@ -39,25 +39,25 @@ namespace Alcea\Cnp;
  * ```
  *
  * @see https://ro.wikipedia.org/wiki/Cod_numeric_personal
- * @author Alcea Nicolae <nicu(dotta)alcea(atta)gmail(dotta)com>
+ * @author Niku Alcea <nicu(dotta)alcea(atta)gmail(dotta)com>
  *
- * @property string $_cnp
  * @property boolean $_isValid
- * @property array $_cnpArray
- * @property int $_year
- * @property int $_month
- * @property int $_day
- * @property string $_cc
+ * @property array $_cnp
+ * @property integer|false $_year
+ * @property integer|false $_month
+ * @property integer|false $_day
+ * @property integer|false $_cc
+ * @property integer|false $_serial
  */
 class Cnp
 {
-    private $_cnp;
-    private $_isValid;
-    private $_cnpArray;
-    private $_year;
-    private $_month;
-    private $_day;
-    private $_cc;
+    private $_isValid = false;
+    private $_cnp = [];
+    private $_year = false;
+    private $_month = false;
+    private $_day = false;
+    private $_cc = false;
+    private $_serial = false;
     private static $controlKey = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9];
     private static $countyCode = [
         '01' => 'Alba',
@@ -97,7 +97,7 @@ class Cnp
         '35' => 'Timis',
         '36' => 'Tulcea',
         '37' => 'Vaslui',
-        '38' => 'Vâlcea',
+        '38' => 'Valcea',
         '39' => 'Vrancea',
         '40' => 'Bucuresti',
         '41' => 'Bucuresti S.1',
@@ -116,8 +116,7 @@ class Cnp
      */
     public function __construct($cnp)
     {
-        $this->_cnp = trim($cnp);
-        $this->_cnpArray = str_split($this->_cnp);
+        $this->_cnp = str_split(trim($cnp));
         $this->_isValid = $this->validateCnp();
     }
 
@@ -127,72 +126,45 @@ class Cnp
      */
     private function validateCnp()
     {
+        $cnpArray = $this->_cnp;
+
         // CNP must have 13 characters
-        if (strlen($this->_cnp) != 13) {
+        if (count($cnpArray) != 13) {
             return false;
         }
 
-        // Check Year
-        $this->setYear();
-        if (($this->_year < 1800) || ($this->_year > 2099)) {
-            return false;
-        }
-
-        // Check for month
-        $this->setMonth();
-        if (($this->_month > 12) || ($this->_month < 1)) {
-            return false;
-        }
-
-        // Check for day
-        $this->setDay();
-        if ($this->_day < 1) {
-            return false;
-        }
-        if ($this->_day > 31) {
-            return false;
-        }
-        if ($this->_day > 28) {
-            // validate date for day of month - 28, 29, 30 si 31
-            if (checkdate($this->_month, $this->_day, $this->_year) === false) {
-                return false;
+        // Set and check year, month, day and county
+        if ($this->year() && $this->month() && $this->day() && $this->county()) {
+            $hashArray = self::$controlKey;
+            $hashSum = 0;
+            // All characters must be numeric
+            for ($i = 0; $i <= 12; $i++) {
+                if (!is_numeric($cnpArray[$i])) {
+                    return false;
+                }
+                if ($i < 12) {
+                    $hashSum += (int)$cnpArray[$i] * (int)$hashArray[$i];
+                }
             }
-        }
 
-        // Check for county code
-        $this->setCountyCode();
-        if (!array_key_exists($this->_cc, self::$countyCode)) {
-            return false;
-        }
-
-        $cnpArray = $this->_cnpArray;
-        $hashArray = self::$controlKey;
-        $hashSum = 0;
-        // All characters must be numeric
-        for ($i = 0; $i < 13; $i++) {
-            if (!is_numeric($cnpArray[$i])) {
-                return false;
+            $hashSum = $hashSum % 11;
+            if ($hashSum == 10) {
+                $hashSum = 1;
             }
-            if ($i < 12) {
-                $hashSum += (int)$cnpArray[$i] * (int)$hashArray[$i];
-            }
+
+            return ($cnpArray[12] == $hashSum);
         }
 
-        $hashSum = $hashSum % 11;
-        if ($hashSum == 10) {
-            $hashSum = 1;
-        }
-
-        return ($cnpArray[12] == $hashSum);
+        return false;
     }
 
     /**
-     *
-     * @return void
+     * Check and set year
+     * @return boolean
      */
-    private function setYear()
+    private function year()
     {
-        $cnp = $this->_cnpArray;
+        $cnp = $this->_cnp;
         $year = ($cnp[1] * 10) + $cnp[2];
         switch ($cnp[0]) {
             // romanian citizen born between 1900.01.01 and 1999.12.31
@@ -230,30 +202,52 @@ class Cnp
         }
 
         $this->_year = $year;
+
+        return ($year >= 1800) && ($year <= 2099);
     }
 
     /**
-     * @return void
+     * Check and set month
+     * @return boolean
      */
-    private function setMonth()
+    private function month()
     {
-        $this->_month = (int)($this->_cnpArray[3] . $this->_cnpArray[4]);
+        $this->_month = (int)($this->_cnp[3] . $this->_cnp[4]);
+
+        return ($this->_month >= 1) && ($this->_month <= 12);
     }
 
     /**
-     * @return void
+     * Check and set day
+     * @return boolean
      */
-    private function setDay()
+    private function day()
     {
-        $this->_day = (int)($this->_cnpArray[5] . $this->_cnpArray[6]);
+        $this->_day = (int)($this->_cnp[5] . $this->_cnp[6]);
+
+        if (($this->_day < 1) || ($this->_day > 31)) {
+            return false;
+        }
+
+        if ($this->_day > 28) {
+            // validate date for day of month - 28, 29, 30 si 31
+            if (checkdate($this->_month, $this->_day, $this->_year) === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
-     * @return void
+     * Check and set county code
+     * @return boolean
      */
-    private function setCountyCode()
+    private function county()
     {
-        $this->_cc = $this->_cnpArray[7] . $this->_cnpArray[8];
+        $this->_cc = (string)($this->_cnp[7] . $this->_cnp[8]);
+
+        return array_key_exists($this->_cc, self::$countyCode);
     }
 
     /**
@@ -282,14 +276,12 @@ class Cnp
     /**
      * Get Birth Date from Romanian Social Security Number (CNP)
      * @param string $format
-     * @return bool|string
+     * @return string|boolean
      */
     public function getBirthDateFromCNP($format = 'Y-m-d')
     {
         if ($this->_isValid) {
-            $time = "{$this->_year}-{$this->_month}-{$this->_day}";
-
-            return \DateTime::createFromFormat('Y-m-d', $time)->format($format);
+            return \DateTime::createFromFormat('Y-m-d', "{$this->_year}-{$this->_month}-{$this->_day}")->format($format);
         }
 
         return false;
@@ -299,13 +291,12 @@ class Cnp
      * Get gender from Romanian Social Security Number (CNP)
      * @param string $m
      * @param string $f
-     * @return boolean
+     * @return string|boolean
      */
     public function getGenderFromCNP($m = 'M', $f = 'F')
     {
         if ($this->_isValid) {
-            $sexCode = $this->_cnpArray[0];
-            switch ($sexCode) {
+            switch ($this->_cnp[0]) {
                 case 1 :
                 case 3 :
                 case 5 :
@@ -325,6 +316,18 @@ class Cnp
                 }
                     break;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getSerialNumberFromCNP()
+    {
+        if ($this->_isValid) {
+            return $this->_cnp[9] . $this->_cnp[10] . $this->_cnp[11];
         }
 
         return false;

@@ -6,7 +6,7 @@
     "type":"library",
     "authors": [
         {
-            "name": "Alcea Nicolae",
+            "name": "Niku Alcea",
             "email": "nicu.alcea@gmail.com"
         }
     ],
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Alcea\\Cnp\\": "src/"
+            "alcea\\cnp\\": "src/"
         }
     }
 }
