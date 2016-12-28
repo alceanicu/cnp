@@ -1,7 +1,8 @@
 {
-    "name": "alcea/cif",
-    "description": "PHP validation for Romanian VAT code (Validare PHP pentru CIF/ CUI)",
-	"keywords":["CIF", "CUI", "PHP", "Validare"],
+    "name": "alcea/cnp",
+    "description": "PHP Validation for Romanian Social Security Number (Validare PHP pentru CNP)",
+    "keywords":["CNP", "PHP", "Validare"],
+    "type":"library",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +10,7 @@
             "email": "nicu.alcea@gmail.com"
         }
     ],
-	"homepage": "https://github.com/alceanicu/cif",
+    "homepage": "https://github.com/alceanicu/cnp",
     "require": {
         "php": ">=5.3.0"
     },
@@ -18,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "alcea\\cif\\": "src/"
+            "alcea\\cnp\\": "src/"
         }
     }
 }
