@@ -40,3 +40,29 @@ if ($cnp->isValid()) {
 }
 ?>
 ```
+## How to use with YII2?
+
+```php
+<?php
+use yii\base\Model;
+use alcea\cnp\Cnp;
+
+/**
+ * @see http://www.yiiframework.com/doc-2.0/guide-input-validation.html#creating-validators
+ */
+class MyForm extends Model
+{
+    public $cnp;
+    
+    public function rules()
+    {
+        return [
+            ['cnp', function ($attribute, $params, $validator) {
+                if (!(new Cnp($this->$attribute))->isValid()) {
+                    $this->addError($attribute, 'CNP INVALID');
+                }
+            }]
+        ];
+    }
+}
+```
