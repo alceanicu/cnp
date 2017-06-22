@@ -20,7 +20,7 @@ composer require  alcea/cnp "~2"
 git clone https://github.com/alceanicu/cnp.git
 ```
 
-#How to use?
+## How to use?
 
 ```php
 <?php
@@ -40,7 +40,7 @@ if ($cnp->isValid()) {
 }
 ?>
 ```
-## How to use with YII2?
+#### How to use with YII2?
 
 ```php
 <?php
