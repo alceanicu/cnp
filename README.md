@@ -3,7 +3,7 @@
 # CNP
 PHP validation for Romanian Social Security Number (Validare CNP)
 
-#How to install?
+## How to install?
 
 ### 1. Use composer
 ```php
