@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.org/alceanicu/cnp.svg?branch=master)](https://travis-ci.org/alceanicu/cnp) [![Latest Stable Version](https://poser.pugx.org/alcea/cnp/v/stable.svg)](https://packagist.org/packages/alcea/cnp) [![Total Downloads](https://poser.pugx.org/alcea/cnp/downloads.svg)](https://packagist.org/packages/alcea/cnp) [![License](https://poser.pugx.org/alcea/cnp/license.svg)](https://packagist.org/packages/alcea/cnp)
 
 # CNP
-Validation for Romanian Social Security Number (Validare CNP)
+Validation for Romanian Social Security Number (Validare CNP).
+
 From version 2.0 was added possibility to extract some data from a valid CNP (see example below).
 
 ## How to install?
