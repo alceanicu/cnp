@@ -69,9 +69,9 @@ class MyForm extends Model
 }
 ```
 
-### How to use with Laravel 5
+#### How to use with Laravel 5
 
-In app.php adaugati service provider: 'alcea\cnp\laravel\CnpValidatorProvider', dupa care puteti sa utilizati validatorul impreuna cu orice FormRequest sau Validator in felul urmator:
+- in app.php add: 'alcea\cnp\laravel\CnpValidatorProvider'
 
 ```php
 <?php
