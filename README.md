@@ -68,3 +68,23 @@ class MyForm extends Model
     }
 }
 ```
+
+### How to use with Laravel 5
+
+In app.php adaugati service provider: 'alcea\cnp\laravel\CnpValidatorProvider', dupa care puteti sa utilizati validatorul impreuna cu orice FormRequest sau Validator in felul urmator:
+
+```php
+<?php
+public function rules()
+{
+    return [
+        'cnp' => 'required|max:13|cnp',
+    ];
+}
+
+// sau 
+
+Validator::make($data, [
+    'cnp' => 'required|max:13|cnp',
+]);
+```
