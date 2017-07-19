@@ -9,7 +9,7 @@ From version 2.0 was added possibility to extract some data from a valid CNP (se
 
 ### 1. Use composer
 ```php
-composer require  alcea/cnp
+composer require alcea/cnp
 ```
 
 ### 2. or, edit require section from composer.json
