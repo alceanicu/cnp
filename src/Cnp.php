@@ -169,35 +169,30 @@ class Cnp
         switch ($cnp[0]) {
             // romanian citizen born between 1900.01.01 and 1999.12.31
             case 1 :
-            case 2 : {
+            case 2 :
                 $year += 1900;
-            }
                 break;
             // romanian citizen born between 1800.01.01 and 1899.12.31
             case 3 :
-            case 4 : {
+            case 4 :
                 $year += 1800;
-            }
                 break;
             // romanian citizen born between 2000.01.01 and 2099.12.31
             case 5 :
-            case 6 : {
+            case 6 :
                 $year += 2000;
-            }
                 break;
             // residents && people with foreign citizenship
             case 7 :
             case 8 :
-            case 9 : {
+            case 9 :
                 $year += 2000;
                 if ($year > (int)date('Y') - 14) {
                     $year -= 100;
                 }
-            }
                 break;
-            default : {
+            default :
                 $year = 0;
-            }
                 break;
         }
 
@@ -296,25 +291,10 @@ class Cnp
     public function getGenderFromCNP($m = 'M', $f = 'F')
     {
         if ($this->_isValid) {
-            switch ($this->_cnp[0]) {
-                case 1 :
-                case 3 :
-                case 5 :
-                case 7 : {
-                    return $m;
-                }
-                    break;
-                case 2 :
-                case 4 :
-                case 6 :
-                case 8 : {
-                    return $f;
-                }
-                    break;
-                default : {
-                    return false;
-                }
-                    break;
+            if (in_array($this->_cnp[0], [1, 3, 5, 7])) {
+                return $m;
+            } elseif (in_array($this->_cnp[0], [2, 4, 6, 8])) {
+                return $f;
             }
         }
 
