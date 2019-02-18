@@ -18,7 +18,7 @@ namespace alcea\cnp;
  * |YY| - year of birth - 00 - 99
  * |MM| - birth month - 01 - 12
  * |DD| - birthday - 01 - 28/29/30/31
- * |CC| - county code - for a valid value check CNP::$CC
+ * |CC| - county code - for a valid value check CNP::$countyCode
  * |XXX|- the serial number assigned to the person - 000 - 999
  * |C|  - check Digit
  *
