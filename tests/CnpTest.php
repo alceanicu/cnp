@@ -1,8 +1,9 @@
 <?php
 
 use alcea\cnp\Cnp;
+use PHPUnit\Framework\TestCase;
 
-class CnpTest extends PHPUnit_Framework_TestCase
+final class CnpTest extends TestCase
 {
 
     public function cnpProvider()
