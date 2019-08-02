@@ -96,3 +96,7 @@ cd cnp
 ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php --testdox
 ```
 
+
+## License
+
+This package is licensed under the MIT license. See [License File](LICENSE.md) for more information.
