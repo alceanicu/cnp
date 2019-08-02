@@ -88,3 +88,11 @@ Validator::make($data, [
     'cnp' => 'required|max:13|cnp',
 ]);
 ```
+
+# How to run tests?
+```
+## Open an terminal and run commands:
+cd cnp
+./vendor/bin/phpunit --bootstrap ./vendor/autoload.php --testdox
+```
+
