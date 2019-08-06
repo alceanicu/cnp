@@ -48,10 +48,10 @@ namespace alcea\cnp;
  *
  * @property boolean $_isValid
  * @property array $_cnp
- * @property integer|string|boolean $_year
- * @property integer|string|boolean $_month
- * @property integer|string|boolean $_day
- * @property integer|string|boolean $_cc
+ * @property integer|boolean $_year
+ * @property integer|boolean $_month
+ * @property integer|boolean $_day
+ * @property integer|boolean $_cc
  */
 class Cnp
 {
@@ -181,41 +181,39 @@ class Cnp
      */
     private function year()
     {
-        $cnp = $this->_cnp;
-        $year = ($cnp[1] * 10) + $cnp[2];
-        switch ($cnp[0]) {
+        $year = ($this->_cnp[1] * 10) + $this->_cnp[2];
+
+        switch ($this->_cnp[0]) {
             // romanian citizen born between 1900.01.01 and 1999.12.31
             case 1 :
             case 2 :
-                $year += 1900;
+                $this->_year = $year + 1900;
                 break;
             // romanian citizen born between 1800.01.01 and 1899.12.31
             case 3 :
             case 4 :
-                $year += 1800;
+                $this->_year = $year + 1800;
                 break;
             // romanian citizen born between 2000.01.01 and 2099.12.31
             case 5 :
             case 6 :
-                $year += 2000;
+                $this->_year = $year + 2000;
                 break;
             // residents && people with foreign citizenship
             case 7 :
             case 8 :
             case 9 :
-                $year += 2000;
-                if ($year > (int)date('Y') - 14) {
-                    $year -= 100;
+                $this->_year = $year + 2000;
+                if ($this->_year > (int)date('Y') - 14) {
+                    $this->_year -= 100;
                 }
                 break;
             default :
-                $year = 0;
+                return false;
                 break;
         }
 
-        $this->_year = $year;
-
-        return ($year >= 1800) && ($year <= 2099);
+        return ($this->_year >= 1800) && ($this->_year <= 2099);
     }
 
     /**
@@ -230,7 +228,7 @@ class Cnp
     }
 
     /**
-     * Check and set day
+     * Check and set day in month
      * @return boolean
      */
     private function day()
@@ -243,7 +241,9 @@ class Cnp
 
         if ($this->_day > 28) {
             // validate date for day of month - 28, 29, 30 si 31
-            if (checkdate($this->_month, $this->_day, $this->_year) === false) {
+            if (($this->_month === false) || ($this->_day === false) || ($this->_year === false)) {
+                return false;
+            } elseif (checkdate($this->_month, $this->_day, $this->_year) === false) {
                 return false;
             }
         }
