@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alceanicu/cnp.svg?branch=master)](https://travis-ci.org/alceanicu/cnp) [![Latest Stable Version](https://poser.pugx.org/alcea/cnp/v/stable.svg)](https://packagist.org/packages/alcea/cnp) [![Total Downloads](https://poser.pugx.org/alcea/cnp/downloads.svg)](https://packagist.org/packages/alcea/cnp) [![License](https://poser.pugx.org/alcea/cnp/license.svg)](https://packagist.org/packages/alcea/cnp)
+[![Build Status](https://travis-ci.org/alceanicu/cnp.svg?branch=master)](https://travis-ci.org/alceanicu/cnp) [![Latest Stable Version](https://poser.pugx.org/alcea/cnp/v/stable.svg)](https://packagist.org/packages/alcea/cnp) [![Total Downloads](https://poser.pugx.org/alcea/cnp/downloads.svg)](https://packagist.org/packages/alcea/cnp) [![License](https://poser.pugx.org/alcea/cnp/license.svg)](https://packagist.org/packages/alcea/cnp) [![codecov](https://codecov.io/gh/alceanicu/cnp/branch/master/graph/badge.svg)](https://codecov.io/gh/alceanicu/cnp)
 
 # CNP
 Validation for Romanian Social Security Number (Validare CNP).
