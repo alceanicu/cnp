@@ -48,10 +48,10 @@ namespace alcea\cnp;
  *
  * @property boolean $_isValid
  * @property array $_cnp
- * @property integer|false $_year
- * @property integer|false $_month
- * @property integer|false $_day
- * @property integer|false $_cc
+ * @property integer|string|boolean $_year
+ * @property integer|string|boolean $_month
+ * @property integer|string|boolean $_day
+ * @property integer|string|boolean $_cc
  */
 class Cnp
 {
