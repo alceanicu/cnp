@@ -241,7 +241,7 @@ class Cnp
 
         if ($this->_day > 28) {
             // validate date for day of month - 28, 29, 30 si 31
-            if (($this->_month === false) || ($this->_day === false) || ($this->_year === false)) {
+            if (is_bool($this->_month) || is_bool($this->_day) || is_bool($this->_year)) {
                 return false;
             } elseif (checkdate($this->_month, $this->_day, $this->_year) === false) {
                 return false;
