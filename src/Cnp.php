@@ -48,19 +48,19 @@ namespace alcea\cnp;
  *
  * @property boolean $_isValid
  * @property array $_cnp
- * @property integer|boolean $_year
- * @property integer|boolean $_month
- * @property integer|boolean $_day
- * @property integer|boolean $_cc
+ * @property string $_year
+ * @property string $_month
+ * @property string $_day
+ * @property string $_cc
  */
 class Cnp
 {
     private $_isValid = false;
     private $_cnp = [];
-    private $_year = false;
-    private $_month = false;
-    private $_day = false;
-    private $_cc = false;
+    private $_year = '';
+    private $_month = '';
+    private $_day = '';
+    private $_cc = '';
 
     private static $controlKey = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9];
     private static $countyCode = [
@@ -222,9 +222,10 @@ class Cnp
      */
     private function month()
     {
-        $this->_month = (int)($this->_cnp[3] . $this->_cnp[4]);
+        $this->_month = $this->_cnp[3] . $this->_cnp[4];
+        $month = (int)$this->_month;
 
-        return ($this->_month >= 1) && ($this->_month <= 12);
+        return ($month >= 1) && ($month <= 12);
     }
 
     /**
@@ -233,17 +234,16 @@ class Cnp
      */
     private function day()
     {
-        $this->_day = (int)($this->_cnp[5] . $this->_cnp[6]);
+        $this->_day = $this->_cnp[5] . $this->_cnp[6];
+        $day = (int)$this->_day;
 
-        if (($this->_day < 1) || ($this->_day > 31)) {
+        if (($day < 1) || ($day > 31)) {
             return false;
         }
 
-        if ($this->_day > 28) {
+        if ($day > 28) {
             // validate date for day of month - 28, 29, 30 si 31
-            if (is_bool($this->_month) || is_bool($this->_day) || is_bool($this->_year)) {
-                return false;
-            } elseif (checkdate($this->_month, $this->_day, $this->_year) === false) {
+            if (checkdate((int)$this->_month, $day, (int)$this->_year) === false) {
                 return false;
             }
         }
@@ -257,7 +257,7 @@ class Cnp
      */
     private function county()
     {
-        $this->_cc = (string)($this->_cnp[7] . $this->_cnp[8]);
+        $this->_cc = $this->_cnp[7] . $this->_cnp[8];
 
         return array_key_exists($this->_cc, self::$countyCode);
     }
