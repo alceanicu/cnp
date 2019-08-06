@@ -40,6 +40,10 @@ if ($cnp->isValid()) {
 } else {
     echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
+
+// OR
+
+echo "CNP {$cnpToValidate} is " () . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
 ?>
 ```
 #### How to use with YII2?
