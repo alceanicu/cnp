@@ -36,6 +36,11 @@ namespace alcea\cnp;
  * } else {
  *      echo "CNP {$cnpToValidate} is invalid" . PHP_EOL;
  * }
+ *
+ * // or
+ *
+ * echo "CNP {$cnpToValidate} is " () . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
+ *
  * ```
  *
  * @see https://ro.wikipedia.org/wiki/Cod_numeric_personal
@@ -47,7 +52,6 @@ namespace alcea\cnp;
  * @property integer|false $_month
  * @property integer|false $_day
  * @property integer|false $_cc
- * @property integer|false $_serial
  */
 class Cnp
 {
@@ -57,7 +61,7 @@ class Cnp
     private $_month = false;
     private $_day = false;
     private $_cc = false;
-    private $_serial = false;
+
     private static $controlKey = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9];
     private static $countyCode = [
         '01' => 'Alba',
@@ -112,12 +116,25 @@ class Cnp
 
     /**
      * CNP constructor.
-     * @param string $cnp
+     * @param string|int $cnp
      */
     public function __construct($cnp)
     {
-        $this->_cnp = str_split(trim($cnp));
-        $this->_isValid = $this->validateCnp();
+        try {
+            $this->_cnp = str_split(trim($cnp));
+            $this->_isValid = $this->validateCnp();
+        } catch (\Throwable $e) {
+            $this->_isValid = false;
+        }
+    }
+
+    /**
+     * @param string|int $cnp
+     * @return bool
+     */
+    public static function validate($cnp)
+    {
+        return (new static($cnp))->isValid();
     }
 
     /**

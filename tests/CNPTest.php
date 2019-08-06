@@ -3,29 +3,41 @@
 use alcea\cnp\Cnp;
 use PHPUnit\Framework\TestCase;
 
-final class CnpTest extends TestCase
+final class CNPTest extends TestCase
 {
 
     public function cnpProvider()
     {
         return [
-            //[CNP, isValid, year, month, day, county, serial]
+            // CNP, isValid, year, month, day, county, serial
+
+            // valid CNP
             [6140101070075, true, 2014, 1, 1, 'F', 'Botosani', '007'],
             ['6140101070075', true, 2014, 1, 1, 'F', 'Botosani', '007'],
             [' 6140101070075', true, 2014, 1, 1, 'F', 'Botosani', '007'],
             [2331214442371, true, 1933, 12, 14, 'F', 'Bucuresti S.4', '237'],
             [1960911123653, true, 1996, 9, 11, 'M', 'Cluj', '365'],
             [3970908055828, true, 1897, 9, 8, 'M', 'Bihor', '582'],
+
+            // invalid CNP
             [1960911123655, false, false, false, false, false, false, false],
             ['123', false, false, false, false, false, false, false],
-            ['614010107007A ', false, false, false, false, false, false, false]
+            ['614010107007A ', false, false, false, false, false, false, false],
+            [false, false, false, false, false, false, false, false],
+            [true, false, false, false, false, false, false, false],
+            [0, false, false, false, false, false, false, false],
+            [-1, false, false, false, false, false, false, false],
+            ['', false, false, false, false, false, false, false],
+            ['xxx', false, false, false, false, false, false, false],
+            [[], false, false, false, false, false, false, false],
+            [new stdClass(), false, false, false, false, false, false, false],
         ];
     }
 
     /**
      * @dataProvider cnpProvider
      */
-    public function testCNP($cnp, $isValid, $year, $month, $day, $sex, $county, $serial)
+    public function test_CNP_is_valid_or_not($cnp, $isValid, $year, $month, $day, $sex, $county, $serial)
     {
         $_cnp = new Cnp($cnp);
 
@@ -36,6 +48,14 @@ final class CnpTest extends TestCase
         $this->assertEquals($_cnp->getGenderFromCNP(), $sex);
         $this->assertEquals($_cnp->getBirthCountyFromCNP(), $county);
         $this->assertEquals($_cnp->getSerialNumberFromCNP(), $serial);
+    }
+
+    /**
+     * @dataProvider cnpProvider
+     */
+    public function test_static_CNP_validator($cnp, $isValid, $year, $month, $day, $sex, $county, $serial)
+    {
+        $this->assertEquals($isValid, Cnp::validate($cnp));
     }
 
     /**
@@ -52,7 +72,7 @@ final class CnpTest extends TestCase
      *
      * @test
      */
-    public function testCNP_2910627308894_IsValid()
+    public function testCNP_2910627308894_is_valid()
     {
         $cnp = new Cnp(2910627308894);
 
@@ -80,7 +100,7 @@ final class CnpTest extends TestCase
      *
      * @test
      */
-    public function testCNP_2890905230065_IsValid()
+    public function testCNP_2890905230065_is_valid()
     {
         $cnp = new Cnp(2890905230065);
 
@@ -100,7 +120,7 @@ final class CnpTest extends TestCase
     /**
      * @test
      */
-    public function testCNP_22222_IsInvalid()
+    public function testCNP_22222_is_invalid()
     {
         $cnp = new Cnp(22222);
 
@@ -109,5 +129,4 @@ final class CnpTest extends TestCase
         $this->assertFalse($cnp->getBirthDateFromCNP());
         $this->assertFalse($cnp->getGenderFromCNP());
     }
-
 }
