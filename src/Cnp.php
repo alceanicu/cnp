@@ -210,7 +210,6 @@ class Cnp
                 break;
             default :
                 return false;
-                break;
         }
 
         return ($this->_year >= 1800) && ($this->_year <= 2099);
