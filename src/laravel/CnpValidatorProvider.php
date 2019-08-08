@@ -2,30 +2,30 @@
 
 namespace alcea\cnp\laravel;
 
-class CnpValidatorProvider extends Illuminate\Support\ServiceProvider
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use alcea\cnp\Cnp;
+
+class CnpValidatorProvider extends ServiceProvider
 {
 
     /**
      * Bootstrap any application services.
-     *
      * @return void
      */
     public function boot()
     {
-        Illuminate\Support\Facades\Validator::extend('cnp', function($attribute, $value, $parameters) {
-            return alcea\cnp\Cnp::valid($value);
+        Validator::extend('cnp', function ($attribute, $value, $parameters) {
+            return Cnp::validate($value);
         });
 
-        Illuminate\Support\Facades\Validator::replacer('cnp', function($message, $attribute, $rule, $parameters) {
-            $message = "CNP invalid!";
-
-            return $message;
+        Validator::replacer('cnp', function ($message, $attribute, $rule, $parameters) {
+            return "CNP invalid!";
         });
     }
 
     /**
      * Register bindings in the container.
-     *
      * @return void
      */
     public function register()
