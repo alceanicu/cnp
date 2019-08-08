@@ -41,9 +41,9 @@ if ($cnp->isValid()) {
     echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
 
-// OR
+// OR 
 
-echo "CNP {$cnpToValidate} is " () . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
+echo "CNP {$cnpToValidate} is " . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
 ?>
 ```
 #### How to use with YII2?
@@ -64,7 +64,7 @@ class MyForm extends Model
     {
         return [
             ['cnp', function ($attribute, $params, $validator) {
-                if (!(new Cnp($this->$attribute))->isValid()) {
+                if (!Cnp::validate($this->attribute)) {
                     $this->addError($attribute, 'CNP INVALID');
                 }
             }]
