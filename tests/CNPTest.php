@@ -20,18 +20,18 @@ final class CNPTest extends TestCase
             [3970908055828, true, 1897, 9, 8, 'M', 'Bihor', '582'],
 
             // invalid CNP
-            ['397090805582I', false, false, false, false, false, false, false],
-            [1960911123655, false, false, false, false, false, false, false],
-            ['123', false, false, false, false, false, false, false],
-            ['614010107007A ', false, false, false, false, false, false, false],
-            [false, false, false, false, false, false, false, false],
-            [true, false, false, false, false, false, false, false],
-            [0, false, false, false, false, false, false, false],
-            [-1, false, false, false, false, false, false, false],
-            ['', false, false, false, false, false, false, false],
-            ['xxx', false, false, false, false, false, false, false],
-            [[], false, false, false, false, false, false, false],
-            [new stdClass(), false, false, false, false, false, false, false],
+            ['397090805582I', false, '', '', '', '', '', ''],
+            [1960911123655, false, '', '', '', '', '', ''],
+            ['123', false, '', '', '', '', '', ''],
+            ['614010107007A ', false, '', '', '', '', '', ''],
+            [false, false, '', '', '', '', '', ''],
+            [true, false, '', '', '', '', '', ''],
+            [0, false, '', '', '', '', '', ''],
+            [-1, false, '', '', '', '', '', ''],
+            ['', false, '', '', '', '', '', ''],
+            ['xxx', false, '', '', '', '', '', ''],
+            [[], false, '', '', '', '', '', ''],
+            [new stdClass(), false, '', '', '', '', '', ''],
         ];
     }
 
@@ -126,8 +126,8 @@ final class CNPTest extends TestCase
         $cnp = new Cnp(22222);
 
         $this->assertFalse($cnp->isValid());
-        $this->assertFalse($cnp->getBirthCountyFromCNP());
-        $this->assertFalse($cnp->getBirthDateFromCNP());
-        $this->assertFalse($cnp->getGenderFromCNP());
+        $this->assertEquals('', $cnp->getBirthCountyFromCNP());
+        $this->assertEquals('', $cnp->getBirthDateFromCNP());
+        $this->assertEquals('', $cnp->getGenderFromCNP());
     }
 }

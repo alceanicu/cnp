@@ -201,12 +201,12 @@ class Cnp
 
     private function setMonth()
     {
-        $this->_month = (int)($this->_cnp[3] . $this->_cnp[4]);
+        $this->_month = $this->_cnp[3] . $this->_cnp[4];
     }
 
     private function setDay()
     {
-        $this->_day = (int)($this->_cnp[5] . $this->_cnp[6]);
+        $this->_day = $this->_cnp[5] . $this->_cnp[6];
     }
 
     private function setCounty()
@@ -227,7 +227,8 @@ class Cnp
      */
     private function checkMonth()
     {
-        return ($this->_month >= 1) && ($this->_month <= 12);
+        $month = (int)$this->_month;
+        return ($month >= 1) && ($month <= 12);
     }
 
     /**
@@ -235,13 +236,14 @@ class Cnp
      */
     private function checkDay()
     {
-        if (($this->_day < 1) || ($this->_day > 31)) {
+        $day = (int)$this->_day;
+        if (($day < 1) || ($day > 31)) {
             return false;
         }
 
-        if ($this->_day > 28) {
+        if ($day > 28) {
             // validate date for day of month - 28, 29, 30 si 31
-            if (checkdate($this->_month, $this->_day, (int)$this->_year) === false) {
+            if (checkdate((int)$this->_month, $day, (int)$this->_year) === false) {
                 return false;
             }
         }
@@ -287,40 +289,38 @@ class Cnp
 
     /**
      * Get Birth Place from Romanian Social Security Number (CNP)
-     * @param string|bool $defaultReturn
-     * @return string|bool
+     * @param mixed|string $invalidReturn
+     * @return mixed|string
      */
-    public function getBirthCountyFromCNP($defaultReturn = false)
+    public function getBirthCountyFromCNP($invalidReturn = '')
     {
-        if ($this->_isValid) {
-            return self::$countyCode[$this->_cc];
-        }
-
-        return $defaultReturn;
+        return ($this->_isValid) ? self::$countyCode[$this->_cc] : $invalidReturn;
     }
 
     /**
      * Get Birth Date from Romanian Social Security Number (CNP)
      * @param string $format
-     * @return string|boolean
+     * @param mixed|string $invalidReturn
+     * @return string
      */
-    public function getBirthDateFromCNP($format = 'Y-m-d')
+    public function getBirthDateFromCNP($format = 'Y-m-d', $invalidReturn = '')
     {
         if ($this->_isValid) {
             return \DateTime::createFromFormat('Y-m-d', "{$this->_year}-{$this->_month}-{$this->_day}")
                 ->format($format);
         }
 
-        return false;
+        return $invalidReturn;
     }
 
     /**
      * Get gender from Romanian Social Security Number (CNP)
      * @param string $m
      * @param string $f
-     * @return string|boolean
+     * @param string $invalidReturn
+     * @return string
      */
-    public function getGenderFromCNP($m = 'M', $f = 'F')
+    public function getGenderFromCNP($m = 'M', $f = 'F', $invalidReturn = '')
     {
         if ($this->_isValid) {
             if (in_array($this->_cnp[0], [1, 3, 5, 7])) {
@@ -330,19 +330,15 @@ class Cnp
             }
         }
 
-        return false;
+        return $invalidReturn;
     }
 
     /**
-     * @return bool|string
+     * @return string
      */
     public function getSerialNumberFromCNP()
     {
-        if ($this->_isValid) {
-            return $this->_cnp[9] . $this->_cnp[10] . $this->_cnp[11];
-        }
-
-        return false;
+        return ($this->_isValid) ? $this->_cnp[9] . $this->_cnp[10] . $this->_cnp[11] : '';
     }
 
 }
