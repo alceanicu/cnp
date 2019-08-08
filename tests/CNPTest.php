@@ -20,6 +20,7 @@ final class CNPTest extends TestCase
             [3970908055828, true, 1897, 9, 8, 'M', 'Bihor', '582'],
 
             // invalid CNP
+            ['397090805582I', false, false, false, false, false, false, false],
             [1960911123655, false, false, false, false, false, false, false],
             ['123', false, false, false, false, false, false, false],
             ['614010107007A ', false, false, false, false, false, false, false],

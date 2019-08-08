@@ -143,43 +143,29 @@ class Cnp
      */
     private function validateCnp()
     {
-        $cnpArray = $this->_cnp;
-
-        // CNP must have 13 characters
-        if (count($cnpArray) != 13) {
+        if (count($this->_cnp) != 13) {
             return false;
         }
 
-        // Set and check year, month, day and county
-        if ($this->year() && $this->month() && $this->day() && $this->county()) {
-            $hashArray = self::$controlKey;
-            $hashSum = 0;
-            // All characters must be numeric
-            for ($i = 0; $i <= 12; $i++) {
-                if (!is_numeric($cnpArray[$i])) {
-                    return false;
-                }
-                if ($i < 12) {
-                    $hashSum += (int)$cnpArray[$i] * (int)$hashArray[$i];
-                }
+        for ($i = 0; $i <= 12; $i++) {
+            if (!is_numeric($this->_cnp[$i])) {
+                return false;
             }
+        }
 
-            $hashSum = $hashSum % 11;
-            if ($hashSum == 10) {
-                $hashSum = 1;
-            }
+        $this->setYear();
+        $this->setMonth();
+        $this->setDay();
+        $this->setCounty();
 
-            return ($cnpArray[12] == $hashSum);
+        if ($this->checkYear() && $this->checkMonth() && $this->checkDay() && $this->checkCounty()) {
+            return ($this->_cnp[12] == $this->calculateHash());
         }
 
         return false;
     }
 
-    /**
-     * Check and set year
-     * @return boolean
-     */
-    private function year()
+    private function setYear()
     {
         $year = ($this->_cnp[1] * 10) + $this->_cnp[2];
 
@@ -209,40 +195,53 @@ class Cnp
                 }
                 break;
             default :
-                return false;
+                $this->_year = 0;
         }
+    }
 
+    private function setMonth()
+    {
+        $this->_month = (int)($this->_cnp[3] . $this->_cnp[4]);
+    }
+
+    private function setDay()
+    {
+        $this->_day = (int)($this->_cnp[5] . $this->_cnp[6]);
+    }
+
+    private function setCounty()
+    {
+        $this->_cc = $this->_cnp[7] . $this->_cnp[8];
+    }
+
+    /**
+     * @return bool
+     */
+    private function checkYear()
+    {
         return ($this->_year >= 1800) && ($this->_year <= 2099);
     }
 
     /**
-     * Check and set month
-     * @return boolean
+     * @return bool
      */
-    private function month()
+    private function checkMonth()
     {
-        $this->_month = $this->_cnp[3] . $this->_cnp[4];
-        $month = (int)$this->_month;
-
-        return ($month >= 1) && ($month <= 12);
+        return ($this->_month >= 1) && ($this->_month <= 12);
     }
 
     /**
-     * Check and set day in month
      * @return boolean
      */
-    private function day()
+    private function checkDay()
     {
-        $this->_day = $this->_cnp[5] . $this->_cnp[6];
-        $day = (int)$this->_day;
-
-        if (($day < 1) || ($day > 31)) {
+        if (($this->_day < 1) || ($this->_day > 31)) {
             return false;
         }
 
-        if ($day > 28) {
+        if ($this->_day > 28) {
             // validate date for day of month - 28, 29, 30 si 31
-            if (checkdate((int)$this->_month, $day, (int)$this->_year) === false) {
+            if (checkdate($this->_month, $this->_day, (int)$this->_year) === false) {
                 return false;
             }
         }
@@ -251,14 +250,30 @@ class Cnp
     }
 
     /**
-     * Check and set county code
      * @return boolean
      */
-    private function county()
+    private function checkCounty()
     {
-        $this->_cc = $this->_cnp[7] . $this->_cnp[8];
-
         return array_key_exists($this->_cc, self::$countyCode);
+    }
+
+    /**
+     * @return int
+     */
+    private function calculateHash()
+    {
+        $hashSum = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            $hashSum += $this->_cnp[$i] * self::$controlKey[$i];
+        }
+
+        $hashSum = $hashSum % 11;
+        if ($hashSum == 10) {
+            $hashSum = 1;
+        }
+
+        return $hashSum;
     }
 
     /**
@@ -292,7 +307,8 @@ class Cnp
     public function getBirthDateFromCNP($format = 'Y-m-d')
     {
         if ($this->_isValid) {
-            return \DateTime::createFromFormat('Y-m-d', "{$this->_year}-{$this->_month}-{$this->_day}")->format($format);
+            return \DateTime::createFromFormat('Y-m-d', "{$this->_year}-{$this->_month}-{$this->_day}")
+                ->format($format);
         }
 
         return false;
