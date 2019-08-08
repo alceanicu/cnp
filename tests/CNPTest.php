@@ -54,80 +54,9 @@ final class CNPTest extends TestCase
     /**
      * @dataProvider cnpProvider
      */
-    public function test_static_CNP_validator($cnp, $isValid, $year, $month, $day, $sex, $county, $serial)
+    public function test_static_CNP_validator($cnp, $isValid)
     {
         $this->assertEquals($isValid, Cnp::validate($cnp));
     }
 
-    /**
-     * TESTCASE - CNP 2910627308894
-     * BirthDate: [
-     *      (Y/m/d) => 1991/06/27
-     *      (d.m.Y) => 27.06.1991
-     * ]
-     * Gender : [
-     *      ('M', 'F') => F
-     *      ('Masc', 'Fem') => Fem
-     * ]
-     * County: Satu Mare
-     *
-     * @test
-     */
-    public function testCNP_2910627308894_is_valid()
-    {
-        $cnp = new Cnp(2910627308894);
-
-        $this->assertTrue($cnp->isValid());
-        $this->assertEquals('1991-06-27', $cnp->getBirthDateFromCNP());
-        $this->assertEquals('1991/06/27', $cnp->getBirthDateFromCNP('Y/m/d'));
-        $this->assertEquals('27.06.1991', $cnp->getBirthDateFromCNP('d.m.Y'));
-        $this->assertEquals('F', $cnp->getGenderFromCNP());
-        $this->assertEquals('Fem', $cnp->getGenderFromCNP('Masc', 'Fem'));
-        $this->assertEquals('Satu Mare', $cnp->getBirthCountyFromCNP());
-        $this->assertNotEquals('Iasi', $cnp->getBirthCountyFromCNP());
-    }
-
-    /**
-     * TESTCASE - CNP 2890905230065
-     * BirthDate: [
-     *      (Y/m/d) => 1989/09/05
-     *      (d.m.Y) => 05.09.1989
-     * ]
-     * Gender : [
-     *      ('M', 'F') => F
-     *      ('Masc', 'Fem') => Fem
-     * ]
-     * County: Ilfov
-     *
-     * @test
-     */
-    public function testCNP_2890905230065_is_valid()
-    {
-        $cnp = new Cnp(2890905230065);
-
-        $this->assertTrue($cnp->isValid());
-        $this->assertNotEquals('1991-06-27', $cnp->getBirthDateFromCNP());
-        $this->assertEquals('1989/09/05', $cnp->getBirthDateFromCNP('Y/m/d'));
-        $this->assertEquals('05.09.1989', $cnp->getBirthDateFromCNP('d.m.Y'));
-        $this->assertEquals('1989', $cnp->getBirthDateFromCNP('Y'));
-        $this->assertNotEquals('male', $cnp->getGenderFromCNP('male', 'female'));
-        $this->assertEquals('F', $cnp->getGenderFromCNP('M', 'F'));
-        $this->assertEquals('F', $cnp->getGenderFromCNP());
-        $this->assertNotEquals('M', $cnp->getGenderFromCNP('male', 'female'));
-        $this->assertEquals('Ilfov', $cnp->getBirthCountyFromCNP());
-        $this->assertNotEquals('Iasi', $cnp->getBirthCountyFromCNP());
-    }
-
-    /**
-     * @test
-     */
-    public function testCNP_22222_is_invalid()
-    {
-        $cnp = new Cnp(22222);
-
-        $this->assertFalse($cnp->isValid());
-        $this->assertEquals('', $cnp->getBirthCountyFromCNP());
-        $this->assertEquals('', $cnp->getBirthDateFromCNP());
-        $this->assertEquals('', $cnp->getGenderFromCNP());
-    }
 }
