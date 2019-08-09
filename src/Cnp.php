@@ -47,6 +47,7 @@ namespace alcea\cnp;
  * @author Niku Alcea <nicu(dotta)alcea(atta)gmail(dotta)com>
  *
  * @property boolean $_isValid
+ * @property string $cnp
  * @property array $_cnp
  * @property string $_year
  * @property string $_month
@@ -56,6 +57,7 @@ namespace alcea\cnp;
 class Cnp
 {
     private $_isValid = false;
+    private $cnp = '';
     private $_cnp = [];
     private $_year = '';
     private $_month = '';
@@ -121,7 +123,8 @@ class Cnp
     public function __construct($cnp)
     {
         try {
-            $this->_cnp = str_split(trim($cnp));
+            $this->cnp = trim($cnp);
+            $this->_cnp = str_split($this->cnp);
             $this->_isValid = $this->validateCnp();
         } catch (\Throwable $e) {
             $this->_isValid = false;
@@ -147,10 +150,8 @@ class Cnp
             return false;
         }
 
-        for ($i = 0; $i <= 12; $i++) {
-            if (!is_numeric($this->_cnp[$i])) {
-                return false;
-            }
+        if (!ctype_digit($this->cnp)) {
+            return false;
         }
 
         $this->setYear();
