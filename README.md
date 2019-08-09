@@ -14,7 +14,7 @@ composer require alcea/cnp
 
 ### 2. or, edit require section from composer.json
 ```
-"alcea/cnp": "^2.1"
+"alcea/cnp": "^3.0"
 ```
 
 ### 3. or, clone from GitHub
@@ -29,6 +29,7 @@ git clone https://github.com/alceanicu/cnp.git
 use alcea\cnp\Cnp;
 
 $cnpToBeValidated = '5110102441483';
+
 $cnp = new Cnp($cnpToBeValidated);
 if ($cnp->isValid()) {
     // get info from CNP
@@ -44,62 +45,14 @@ if ($cnp->isValid()) {
 // OR 
 
 echo "CNP {$cnpToValidate} is " . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
-?>
-```
-#### How to use with YII2?
-
-```php
-<?php
-use yii\base\Model;
-use alcea\cnp\Cnp;
-
-/**
- * @see http://www.yiiframework.com/doc-2.0/guide-input-validation.html#creating-validators
- */
-class MyForm extends Model
-{
-    public $cnp;
-    
-    public function rules()
-    {
-        return [
-            ['cnp', function ($attribute, $params, $validator) {
-                if (!Cnp::validate($this->attribute)) {
-                    $this->addError($attribute, 'CNP INVALID');
-                }
-            }]
-        ];
-    }
-}
 ```
 
-#### How to use with Laravel 5
-
-- in app.php add: 'alcea\cnp\laravel\CnpValidatorProvider'
-
-```php
-<?php
-public function rules()
-{
-    return [
-        'cnp' => 'required|max:13|cnp',
-    ];
-}
-
-// sau 
-
-Validator::make($data, [
-    'cnp' => 'required|max:13|cnp',
-]);
-```
-
-# How to run tests?
+## How to run tests?
 ```
 ## Open an terminal and run commands:
 cd cnp
 ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php --testdox
 ```
-
 
 ## License
 
