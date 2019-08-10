@@ -30,9 +30,13 @@ use alcea\cnp\Cnp;
 
 $cnpToBeValidated = '5110102441483';
 
+echo "CNP {$cnpToValidate} is " . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
+
+// OR 
+
 $cnp = new Cnp($cnpToBeValidated);
 if ($cnp->isValid()) {
-    // get info from CNP
+    // extract information from CNP
     echo "CNP {$cnpToBeValidated} - is valid" . PHP_EOL;
     echo "Birth Date: {$cnp->getBirthDateFromCNP('Y/m/d')}" . PHP_EOL;
     echo "Birth Place: {$cnp->getBirthCountyFromCNP()}" . PHP_EOL;
@@ -41,10 +45,6 @@ if ($cnp->isValid()) {
 } else {
     echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
-
-// OR 
-
-echo "CNP {$cnpToValidate} is " . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
 ```
 
 ## How to run tests?
