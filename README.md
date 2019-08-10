@@ -14,7 +14,7 @@ composer require alcea/cnp
 
 ### 2. or, edit require section from composer.json
 ```
-"alcea/cnp": "^3.0"
+"alcea/cnp": "^2.1"
 ```
 
 ### 3. or, clone from GitHub
