@@ -17,11 +17,6 @@ composer require alcea/cnp
 "alcea/cnp": "^2.1"
 ```
 
-### 3. or, clone from GitHub
-```
-git clone https://github.com/alceanicu/cnp.git
-```
-
 ## How to use?
 
 ```php
