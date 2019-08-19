@@ -371,7 +371,7 @@ class Cnp
             $time = "{$this->_year}-{$this->_month}-{$this->_day}";
             $birthDate = \DateTime::createFromFormat('Y-m-d', $time);
             $now = (new \DateTime())->setTime(0, 0, 0);
-            return (int)$birthDate->diff($now)->format('%y');
+            return (int)($birthDate->diff($now)->format('%y'));
         } catch (\Throwable $e) {
             return 0;
         }
