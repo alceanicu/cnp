@@ -32,7 +32,9 @@ namespace alcea\cnp;
  *      echo "CNP {$cnpToValidate} - is valid" . PHP_EOL;
  *      echo "Birth Date: {$cnp->getBirthDateFromCNP('Y/m/d')}" . PHP_EOL;
  *      echo "Birth Place: {$cnp->getBirthCountyFromCNP()}" . PHP_EOL;
- *    echo "Gender: {$cnp->getGenderFromCNP('male', 'female')}" . PHP_EOL;
+ *      echo "Gender: {$cnp->getGenderFromCNP('male', 'female')}" . PHP_EOL;
+ *      echo "Person is " . ($cnp->isPersonMajor() ? '' : 'not' ) . ' major' . PHP_EOL;
+ *      echo "Person have an Identity Card " . ($cnp->hasIdentityCard() ? 'YES' : 'NO' );
  * } else {
  *      echo "CNP {$cnpToValidate} is invalid" . PHP_EOL;
  * }
@@ -340,6 +342,40 @@ class Cnp
     public function getSerialNumberFromCNP()
     {
         return ($this->_isValid) ? $this->_cnp[9] . $this->_cnp[10] . $this->_cnp[11] : '';
+    }
+
+    /**
+     * Verifica daca titularul CNP este major (>=18 years)
+     * @return boolean
+     */
+    public function isPersonMajor()
+    {
+        return ($this->_isValid) ? ($this->getAgeInYears() >= 18) : false;
+    }
+
+    /**
+     * Are carte de identitate emisa de politie (emiterea se face la implinirea varstei de 14 ani)
+     * @return boolean
+     */
+    public function hasIdentityCard()
+    {
+        return ($this->_isValid) ? ($this->getAgeInYears() >= 14) : false;
+    }
+
+    /**
+     * @return int
+     */
+    private function getAgeInYears()
+    {
+        try {
+            $time = "{$this->_year}-{$this->_month}-{$this->_day}";
+            $birthDate = \DateTime::createFromFormat('Y-m-d', $time);
+            $now = (new \DateTime())->setTime(0, 0, 0);
+            return (int)$birthDate->diff($now)->format('%y');
+        } catch (\Throwable $e) {
+            return 0;
+        }
+
     }
 
 }

@@ -25,7 +25,7 @@ use alcea\cnp\Cnp;
 
 $cnpToBeValidated = '5110102441483';
 
-echo "CNP {$cnpToValidate} is " . Cnp::validate($cnpToValidate) ? 'valid' : 'invalid';
+echo "CNP {$cnpToBeValidated} is " . Cnp::validate($cnpToBeValidated) ? 'valid' : 'invalid';
 
 // OR 
 
@@ -36,7 +36,9 @@ if ($cnp->isValid()) {
     echo "Birth Date: {$cnp->getBirthDateFromCNP('Y/m/d')}" . PHP_EOL;
     echo "Birth Place: {$cnp->getBirthCountyFromCNP()}" . PHP_EOL;
     echo "Gender: {$cnp->getGenderFromCNP('male', 'female')}" . PHP_EOL;
-    echo "Serial: {$cnp->getSerialNumberFromCNP()}" . PHP_EOL;
+    echo "Serial: {$cnp->getSerialNumberFromCNP()}" . PHP_EOL; 
+    echo "Person is " . ($cnp->isPersonMajor() ? '' : 'not' ) . ' major' . PHP_EOL;
+    echo "Person have an Identity Card " . ($cnp->hasIdentityCard() ? 'YES' : 'NO' );
 } else {
     echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
