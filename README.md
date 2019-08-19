@@ -12,7 +12,7 @@ From version 2.0 was added possibility to extract some data from a valid CNP (se
 composer require alcea/cnp
 ```
 
-### 2. or, edit require section from composer.json
+### 2. or, edit require section from composer.json and run composer update
 ```
 "alcea/cnp": "^2.1"
 ```
