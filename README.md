@@ -7,7 +7,7 @@ From version 2.0 was added possibility to extract some data from a valid CNP (se
 
 ## How to install?
 
-### 1. Use composer
+### 1. use composer
 ```php
 composer require alcea/cnp
 ```
