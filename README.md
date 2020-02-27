@@ -21,6 +21,7 @@ composer require alcea/cnp
 
 ```php
 <?php
+// require __DIR__ . '\vendor\autoload.php';
 use alcea\cnp\Cnp;
 
 $cnpToBeValidated = '5110102441483';
@@ -47,7 +48,9 @@ if ($cnp->isValid()) {
 ## How to run tests?
 ```
 ## Open an terminal and run commands:
+git clone https://github.com/alceanicu/cnp.git
 cd cnp
+composer install
 ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php --testdox
 ```
 
