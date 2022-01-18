@@ -5,3 +5,5 @@
 /.idea/
 /.phpunit.result.cache
 /.php-cs-fixer.dist.php
+.php-cs-fixer.cache
+
