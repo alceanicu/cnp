@@ -14,7 +14,7 @@ composer require alcea/cnp
 
 ### 2. or, edit require section from composer.json and run composer update
 ```
-"alcea/cnp": "^2.1"
+"alcea/cnp": "^3.0"
 ```
 
 ## How to use?
@@ -25,10 +25,6 @@ composer require alcea/cnp
 use alcea\cnp\Cnp;
 
 $cnpToBeValidated = '5110102441483';
-
-echo "CNP {$cnpToBeValidated} is " . Cnp::validate($cnpToBeValidated) ? 'valid' : 'invalid';
-
-// OR 
 
 $cnp = new Cnp($cnpToBeValidated);
 if ($cnp->isValid()) {
@@ -43,6 +39,11 @@ if ($cnp->isValid()) {
 } else {
     echo "CNP {$cnpToBeValidated} is invalid" . PHP_EOL;
 }
+
+// or call static
+
+echo "CNP {$cnpToBeValidated} is " . Cnp::validate($cnpToBeValidated) ? 'valid' : 'invalid';
+
 ```
 
 ## How to run tests?
@@ -53,6 +54,14 @@ cd cnp
 composer install
 ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php --testdox
 ```
+
+## QA Tools
+
+- [PHPCodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+- [PHPStan](https://github.com/phpstan/phpstan)
+- [PHPMD](https://phpmd.org)
+- [PHPCS Security Audit](https://github.com/FloeDesignTechnologies/phpcs-security-audit)
 
 ## License
 

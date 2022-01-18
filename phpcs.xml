@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<ruleset name="CNP Coding Standard">
+    <description>CNP Coding Standard</description>
+
+    <!-- Paths to check -->
+    <file>./config</file>
+    <file>./module</file>
+    <file>./public/index.php</file>
+
+    <config name="php_version" value="70400"/> <!-- Set target version, for 7.4 set to 70400 etc. -->
+    <!-- Uncomment to keep exit code equals to 0 on warnings -->
+    <!-- <config name="ignore_warnings_on_exit" value="1"/> -->
+
+    <arg name="basepath" value="."/> <!-- Strip file basepath from report -->
+    <arg value="p"/> <!-- Display progress in report -->
+<!--    <arg value="s"/> &lt;!&ndash; Display sniff codes in report &ndash;&gt;-->
+<!--    <arg name="cache" value="./data/cache/.phpcs.cache"/>-->
+    <arg name="colors"/>
+    <arg name="report-width" value="160"/>
+    <arg name="extensions" value="php,php.dist/php,phtml/php"/>
+
+    <!-- inherit rules from: -->
+    <!--    <rule ref="Zend"/>-->
+
+    <!-- or use the rules from Zend 3 project: -->
+    <!-- https://github.com/zendframework/ZendSkeletonApplication/blob/master/phpcs.xml -->
+    <rule ref="PSR12"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <!--    <rule ref="Generic.Formatting.SpaceAfterNot"/> &lt;!&ndash; make sure there is a space after not (!) op, ex: (! $condition) ? true : false &ndash;&gt;-->
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>public/index.php</exclude-pattern>
+    </rule>
+
+    <!-- temporarly increase line length limit as there are too many files to change -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="125"/>
+        </properties>
+    </rule>
+
+    <!-- temporary remove rules with too many warnings that can be ignored for now -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+    <rule ref="PSR2.Methods.FunctionCallSignature.Indent">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+    <!--    <rule ref="Generic.Arrays.DisallowLongArraySyntax">-->
+    <!--        <exclude-pattern>*</exclude-pattern>-->
+    <!--    </rule>-->
+    <!-- end of temp rules -->
+
+    <!-- view files adjustments -->
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="PSR12.Files.FileHeader">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <!-- exclude transform of inline control for *.phtml files as they need to be transformed to alternative php syntax
+     (otherwise the phpcbf will add brackets then php-cs-fixer will try to re-indent differently and so on...) -->
+    <rule ref="Generic.ControlStructures.InlineControlStructure">
+        <exclude-pattern>*.php</exclude-pattern>
+        <properties>
+            <property name="error" value="false"/>
+        </properties>
+        <!-- set lower severity to ignore from fixing automatically by phpcbf -->
+        <severity>4</severity>
+    </rule>
+</ruleset>
