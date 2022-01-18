@@ -3,6 +3,7 @@
 # CNP
 Validation for Romanian Social Security Number (Validare CNP).
 
+From version 3.0 need PHP >= 7.4
 From version 2.0 was added possibility to extract some data from a valid CNP (see example below).
 
 ## How to install?
@@ -15,6 +16,11 @@ composer require alcea/cnp
 ### 2. or, edit require section from composer.json and run composer update
 ```
 "alcea/cnp": "^3.0"
+```
+
+### 3. if need PHP < 7.4 use
+```
+"alcea/cnp": "2.1.6"
 ```
 
 ## How to use?
