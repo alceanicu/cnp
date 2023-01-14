@@ -159,7 +159,7 @@ class Cnp
             $this->setYear();
             $this->month = $this->cnpArray[3] . $this->cnpArray[4];
             $this->day = $this->cnpArray[5] . $this->cnpArray[6];
-            
+
             if ($this->checkDate()) {
                 $this->isValid = $this->cnpArray[12] === $this->calculateHash();
             }
@@ -292,7 +292,7 @@ class Cnp
      */
     public function getBirthCountyFromCNP(string $invalidReturn = ''): string
     {
-        return $this->isValid ? self::COUNTY_CODE[$this->countyCode] : $invalidReturn;
+        return $this->isValid && array_key_exists($this->countyCode, self::COUNTY_CODE) ? self::COUNTY_CODE[$this->countyCode] : $invalidReturn;
     }
 
     /**
