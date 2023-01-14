@@ -20,6 +20,7 @@ use DateTime;
  *      6 = Female, born between 2000 - 2099
  *      7 = Male resident (century does not apply)
  *      8 = Female resident (century does not apply)
+ *      9 = Foreign people (century does not apply)
  *
  * |YY| - year of birth - 00 - 99
  * |MM| - birth month - 01 - 12
@@ -158,9 +159,8 @@ class Cnp
             $this->setYear();
             $this->month = $this->cnpArray[3] . $this->cnpArray[4];
             $this->day = $this->cnpArray[5] . $this->cnpArray[6];
-            $this->countyCode = $this->cnpArray[7] . $this->cnpArray[8];
-
-            if ($this->checkDate() && $this->checkCounty()) {
+            
+            if ($this->checkDate()) {
                 $this->isValid = $this->cnpArray[12] === $this->calculateHash();
             }
         }
@@ -196,7 +196,7 @@ class Cnp
         } elseif (in_array($this->cnpArray[0], [5, 6])) {
             # romanian citizen born between 2000.01.01 and 2099.12.31
             $this->year = $year + 2000;
-        } elseif (in_array($this->cnpArray[0], [7, 8])) {
+        } elseif (in_array($this->cnpArray[0], [7, 8, 9])) {
             # residents && people with foreign citizenship
             $this->year = $year + 2000;
             if ($this->year > (int)date('Y') - 14) {
