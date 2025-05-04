@@ -19,7 +19,8 @@
     ],
     "homepage": "https://github.com/alceanicu/cnp",
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "ext-ctype": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",

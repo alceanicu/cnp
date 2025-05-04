@@ -116,6 +116,7 @@ class Cnp
         '48' => 'Bucureşti Sector 8 (now defunct)',
         '51' => 'Călăraşi',
         '52' => 'Giurgiu',
+        '70' => 'Unique code for any registration, regardless of the county/place where the birth took place',
     ];
 
     private bool $isValid = false;
@@ -245,6 +246,12 @@ class Cnp
      */
     private function checkCounty(): bool
     {
+        /** @see https://www.mai.gov.ro/precizari-in-ceea-ce-priveste-generarea-codului-numeric-personal/ */
+        # 70 - Unique code for any registration, regardless of the county/place where the birth took place
+        if ($this->countyCode == 70) {
+            return true;
+        }
+
         /*
          * 47 = Bucureşti District 7 (now defunct)
          * 48 = Bucureşti District 8 (now defunct)
@@ -336,7 +343,7 @@ class Cnp
     }
 
     /**
-     * Check if persoana is majora (has more then 18 years)
+     * Check if the person is of legal age (>=18 years)
      * @return boolean
      */
     public function isPersonMajor(): bool
