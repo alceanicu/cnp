@@ -1,7 +1,7 @@
 {
     "name": "alcea/cnp",
     "description": "PHP Validation for Personal Identification Number (Validare PHP pentru Cod Numeric Personal CNP)",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "keywords": [
         "CNP",
         "PHP",
